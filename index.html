@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Yourself - Your Daily Pause</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet"> 
+    <style>
+        :root {
+            --primary-green: #7E9C82; /* New Soothing Green */
+            --primary-green-darker: #6A856F; /* Darker shade for hover */
+            --light-green-accent: #B9D8BB; /* New Lighter Green */
+            --light-green-accent-darker: #A2C1A5; /* Darker shade for hover */
+            --soft-neutral-accent: #E0DCD8; /* New Soft Warm Grey */
+            --soft-neutral-accent-darker: #C8C1BA; /* Darker shade for hover */
+            --page-bg: #F8F8F7; 
+            --text-dark: #4A4A4A; 
+            --text-medium: #5D5C61;
+            --white: #ffffff;
+            --light-border: #E0E0E0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--page-bg); 
+            margin: 0;
+            padding: 0; 
+            box-sizing: border-box;
+            color: var(--text-medium); 
+        }
+
+        .site-header {
+            width: 100%;
+            padding: 20px 20px 15px 20px; 
+            display: flex;
+            align-items: center;
+            justify-content: center; 
+            max-width: 1280px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+        .logo-img { 
+            max-height: 70px; 
+            width: auto;
+            display: block; 
+        }
+        .logo-img-fallback { 
+            color: var(--primary-green);
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 10px;
+            border: 1px dashed var(--primary-green);
+            border-radius: 8px;
+            min-height: 70px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+        }
+
+        @media (min-width: 768px) {
+            .site-header {
+                padding: 30px 40px 20px 40px;
+                justify-content: flex-start; 
+            }
+            .logo-img {
+                max-height: 80px; 
+            }
+            .logo-img-fallback {
+                min-height: 80px;
+            }
+        }
+
+        .page-container {
+            display: flex;
+            flex-direction: column; 
+            width: 100%;
+            max-width: 1280px; 
+            margin: 0 auto; 
+            padding: 10px 20px 20px 20px; 
+        }
+
+        .landing-content {
+            flex: 1 1 45%; 
+            padding-right: 0; 
+            margin-bottom: 30px; 
+        }
+
+        .app-column {
+            flex: 1 1 55%; 
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        @media (min-width: 768px) { 
+            .page-container {
+                flex-direction: row; 
+                gap: 40px; 
+                padding: 20px 40px 40px 40px; 
+                align-items: stretch; 
+            }
+            .landing-content {
+                padding-right: 30px; 
+                margin-bottom: 0;
+            }
+        }
+        
+        .landing-content h2 {
+            font-family: 'Playfair Display', serif; 
+            font-size: 2.25rem; 
+            line-height: 2.75rem; 
+            color: var(--primary-green); 
+            margin-bottom: 24px; 
+        }
+        .landing-content p {
+            font-size: 1.05rem; 
+            line-height: 1.7;
+            margin-bottom: 20px; 
+            color: var(--text-dark);
+        }
+        .landing-content .section { 
+            margin-bottom: 0; 
+        }
+        .landing-content ul.custom-bullets {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 24px; 
+            margin-bottom: 24px;
+        }
+        .landing-content ul.custom-bullets li {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 16px; 
+            padding-left: 30px; 
+            position: relative;
+            color: var(--text-dark);
+        }
+        .landing-content ul.custom-bullets li::before {
+            content: '🌿'; 
+            color: var(--primary-green); 
+            font-size: 1.1rem; 
+            position: absolute;
+            left: 0;
+            top: 2px; 
+        }
+
+        .app-container {
+            background-color: var(--white);
+            padding: 24px;
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07); 
+            width: 100%;
+            text-align: center;
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        #main-app-content { 
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+         #settings-section { 
+            flex-grow: 1;
+        }
+
+        .app-container .app-title { 
+            font-family: 'Inter', sans-serif; 
+            font-size: 1.75rem; 
+            font-weight: 700;
+            color: var(--primary-green); 
+            margin-bottom: 24px;
+        }
+        .label {
+            font-size: 16px;
+            color: var(--text-medium); 
+            margin-bottom: 8px;
+            display: block;
+            text-align: left;
+        }
+        .input-time, .input-text, .input-email, .textarea-focus, .textarea-feedback, #daysDropdownBtn {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--light-border); 
+            border-radius: 10px; 
+            font-size: 16px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            color: var(--text-dark);
+            background-color: var(--white); 
+        }
+        #daysDropdownBtn {
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .input-time:focus, .input-text:focus, .input-email:focus, .textarea-focus:focus, .textarea-feedback:focus, #daysDropdownBtn:focus {
+            border-color: var(--primary-green); 
+            box-shadow: 0 0 0 2px rgba(126, 156, 130, 0.2); 
+            outline: none;
+        }
+        .button {
+            color: var(--white);
+            padding: 14px 22px; 
+            border: none;
+            border-radius: 10px; 
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            width: 100%;
+            margin-bottom: 16px;
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+        }
+        .button:active {
+            transform: translateY(1px);
+        }
+        .button.primary-action { 
+             background-color: var(--primary-green); 
+        }
+        .button.primary-action:hover {
+            background-color: var(--primary-green-darker); 
+        }
+
+        .button:disabled {
+            background-color: #C5D3C7; 
+            color: #8A9B8E;
+            cursor: not-allowed;
+        }
+        .button-secondary { 
+            background-color: var(--light-green-accent); 
+            color: var(--white);
+        }
+        .button-secondary:hover {
+            background-color: var(--light-green-accent-darker); 
+        }
+        .button-tertiary { 
+            background-color: var(--soft-neutral-accent); 
+            color: var(--text-dark); 
+        }
+        .button-tertiary:hover {
+            background-color: var(--soft-neutral-accent-darker); 
+        }
+        .button-danger {
+            background-color: #C06C84; 
+            color: white;
+            font-size: 12px; 
+            padding: 6px 10px; 
+            width: auto; 
+        }
+        .button-danger:hover {
+            background-color: #A85A6F; 
+        }
+
+        .status-message, .meditation-text-display {
+            font-size: 14px;
+            color: var(--text-medium); 
+            margin-top: 16px;
+            min-height: 20px;
+            text-align: left;
+            line-height: 1.6;
+        }
+        .meditation-text-display {
+            background-color: var(--page-bg); 
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid var(--light-border); 
+            margin-bottom: 20px; 
+        }
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-green); 
+            color: white;
+            padding: 16px 24px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: none;
+            font-size: 16px;
+            font-weight: 500;
+            max-width: 90%;
+            text-align: center;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .time-slot-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .time-slot-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px; 
+            border: 1px solid var(--light-border); 
+            border-radius: 10px;
+            margin-bottom: 10px; 
+            background-color: var(--white); 
+        }
+        .time-slot-item .time-details {
+            font-size: 16px;
+            color: var(--text-dark); 
+        }
+        .time-slot-item .repeat-days {
+            font-size: 12px;
+            color: #777; 
+            margin-left: 8px;
+        }
+        .section-divider {
+            border-top: 1px solid var(--light-border); 
+            margin-top: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .relative {
+            position: relative;
+        }
+        #daysDropdownContent {
+            position: absolute;
+            z-index: 20; 
+            margin-top: -8px; 
+            width: 100%;
+            background-color: var(--white);
+            border: 1px solid var(--light-border);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 16px;
+        }
+        .day-checkbox-grid { 
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); 
+            gap: 8px; 
+            margin-bottom: 12px;
+        }
+        .day-checkbox-grid label {
+            display: flex; 
+            align-items: center;
+            padding: 4px 0;
+            font-size: 14px; 
+        }
+         .day-checkbox-grid input[type="checkbox"] {
+            margin-right: 6px; 
+            accent-color: var(--primary-green); 
+         }
+         #allDaysLabel { 
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #eee;
+         }
+
+         #feedback-form-container { 
+            margin-top: 20px; 
+            padding-top: 20px;
+            border-top: 1px solid var(--light-border);
+         }
+         #feedback-form-container h3, 
+         #settings-section > h2, 
+         #meditation-section > h2,
+         #timeSlotsListContainer > h3 { 
+            font-size: 1.25rem; 
+            font-weight: 600;
+            color: var(--primary-green); 
+            margin-bottom: 16px;
+            text-align: left;
+         }
+         #meditation-section > h2 {
+             text-align: center; 
+         }
+
+
+        #testimonials-section {
+            margin-top: 40px; 
+            padding-top: 20px;
+            border-top: 1px solid var(--light-border); 
+        }
+        #testimonials-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem; 
+            color: var(--primary-green);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .testimonial {
+            background-color: #EBF0EE; 
+            border-left: 4px solid var(--light-green-accent); 
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .testimonial p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+        .testimonial .author {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-green);
+            text-align: right;
+            margin-top: 12px;
+        }
+
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <img 
+            src="https://placehold.co/250x80/5F8575/F8F8F7?text=Choose+Yourself&font=playfairdisplay" 
+            alt="Choose Yourself Logo" 
+            class="logo-img"
+            onerror="this.style.display='none'; const altText = document.createElement('div'); altText.textContent = this.alt + ' (Image not found - please use a hosted image URL)'; altText.className = 'logo-img-fallback'; this.parentNode.insertBefore(altText, this);"
+        >
+    </header>
+
+    <div class="page-container">
+        <div class="landing-content">
+            <div class="section">
+                <h2>Your Moment to Recharge & Refocus</h2>
+                <p>You work hard at work and your well-being is key to thriving. Short, mindful breaks aren't just pauses; they are powerful tools to enhance your day. Imagine being able to:</p>
+                <ul class="custom-bullets">
+                    <li><strong>Navigate Stress with Grace:</strong>Customized meditation session delivered to you as per your schedule. Step away from the pressure by being in the right frame of mind.</li>
+                    <li><strong>Sharpen Your Mind Just Before Key Events:</strong> Approach important meetings, presentations, or challenging tasks with a clear, focused, and confident mindset.</li>
+                    <li><strong>Boost Your Overall Well-being:</strong> Consistently manage daily work stress, improve your mood, and cultivate a more positive and resilient outlook.</li>
+                    <li><strong>Unlock Peak Performance:</strong> Integrate these moments of stillness to recharge your mental batteries, leading to increased productivity and creativity.</li>
+                </ul>
+                <p class="mt-6">Take a moment for yourself—you've earned it, and your work will thank you for it. Set your preferred times on the right and begin your journey to a more balanced workday.</p>
+            </div>
+        </div>
+
+        <div class="app-column">
+            <div class="app-container">
+                <div id="main-app-content"> 
+                    <h1 class="app-title">Get 5 minute customized meditation session at your convenience </h1> 
+                    <div id="settings-section">
+                        <label for="newTimeSlotInput" class="label">Choose one or more timeslots</label>
+                        <input type="time" id="newTimeSlotInput" class="input-time flex-grow mb-2">
+
+                        <label class="label mt-3">Repeat on:</label>
+                        <div class="relative mb-4">
+                            <button type="button" id="daysDropdownBtn">
+                                <span id="selectedDaysText">Select days</span>
+                                <svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                            <div id="daysDropdownContent" class="hidden">
+                                <div id="daySelectionCheckboxes" class="day-checkbox-grid">
+                                    </div>
+                                <label id="allDaysLabel" class="inline-flex items-center w-full">
+                                    <input type="checkbox" id="allDaysCheckbox" class="form-checkbox rounded h-5 w-5"> <span class="ml-2 text-sm text-gray-700">All Days</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button id="addTimeSlotBtn" class="button primary-action py-3 px-4 w-full self-end mb-0">Remind me</button>
+                        
+                        <div id="timeSlotsListContainer" class="mt-6 hidden">
+                            <h3 class="text-lg font-medium mb-2 text-left">Scheduled Times:</h3>
+                            <ul id="timeSlotsList" class="time-slot-list">
+                                </ul>
+                        </div>
+                        <p id="noTimesMessage" class="text-sm text-gray-500 text-left mt-4 hidden">No meditation times set yet.</p>
+                        <div id="reminderStatus" class="status-message">Add some times to get started.</div>
+                    </div>
+
+                    <div id="meditation-section" class="hidden">
+                        <div class="section-divider"></div>
+                        <h2 id="meditationTitle" class="text-xl font-semibold mb-4">Time for your mindful moment!</h2>
+                        
+                        <div id="focus-input-section">
+                            <label for="focusInput" class="label">What would you like to focus on during this meditation?</label>
+                            <textarea id="focusInput" class="textarea-focus" placeholder="e.g., 'I want to feel calm for my upcoming presentation' or 'reduce stress'"></textarea>
+                            <button id="startFocusedMeditationBtn" class="button button-secondary">Start Guided Meditation</button>
+                        </div>
+
+                        <div id="meditation-text-section" class="hidden">
+                            <h3 id="currentFocusTitle" class="text-lg font-medium mb-2 text-left">Your focus: <span id="currentFocusText" class="font-normal"></span></h3>
+                            <div id="meditationTextContent" class="meditation-text-display">
+                                </div>
+
+                            <button id="showFeedbackFormBtn" class="button button-tertiary hidden">Share Your Feedback</button>
+
+                            <div id="feedback-form-container" class="hidden">
+                                <h3>Share Your Feedback</h3>
+                                <label for="feedbackEmail" class="label">Your Email (Optional):</label>
+                                <input type="email" id="feedbackEmail" class="input-email" placeholder="you@example.com">
+                                
+                                <label for="feedbackText" class="label">Your Feedback:</label>
+                                <textarea id="feedbackText" class="textarea-feedback" placeholder="How was your session?"></textarea>
+                                
+                                <button id="submitFeedbackBtn" class="button button-tertiary">Submit Feedback</button>
+                            </div>
+                            
+                            <button id="finishSessionBtn" class="button primary-action mt-6 hidden">Finish Session & Return</button>
+                        </div>
+                    </div>
+                </div>
+            </div> <div id="testimonials-section">
+                <h3>What Our Users Say</h3>
+                <div class="testimonial">
+                    <p>"These quick meditations are a lifesaver during my chaotic workdays. I feel so much more centered and ready to tackle anything after just a few minutes."</p>
+                    <p class="author">- Sarah M., Marketing Manager</p>
+                </div>
+                <div class="testimonial">
+                    <p>"I was skeptical about 'micro' meditations, but this app made it so easy to build a consistent habit. The reminders are perfect, and I love choosing my focus for the day."</p>
+                    <p class="author">- Jessica L., Software Engineer</p>
+                </div>
+                 <div class="testimonial">
+                    <p>"Finally, a meditation tool that understands the demands of a professional woman's life! The guided texts are incredibly relevant for pre-meeting calm."</p>
+                    <p class="author">- Dr. Emily R., Consultant</p>
+                </div>
+            </div>
+
+        </div> </div> <div id="messageBox" class="message-box"></div>
+
+    <script>
+        // DOM Elements
+        const newTimeSlotInput = document.getElementById('newTimeSlotInput');
+        
+        const daysDropdownBtn = document.getElementById('daysDropdownBtn');
+        const selectedDaysText = document.getElementById('selectedDaysText');
+        const daysDropdownContent = document.getElementById('daysDropdownContent');
+        const daySelectionCheckboxesContainer = document.getElementById('daySelectionCheckboxes');
+        const allDaysCheckbox = document.getElementById('allDaysCheckbox');
+
+        const addTimeSlotBtn = document.getElementById('addTimeSlotBtn');
+        const timeSlotsList = document.getElementById('timeSlotsList');
+        const timeSlotsListContainer = document.getElementById('timeSlotsListContainer'); // Get the container
+        const noTimesMessage = document.getElementById('noTimesMessage');
+        const reminderStatusDiv = document.getElementById('reminderStatus');
+        
+        const settingsSection = document.getElementById('settings-section');
+        const meditationSection = document.getElementById('meditation-section');
+        const meditationTitleElement = document.getElementById('meditationTitle');
+
+        const focusInputSection = document.getElementById('focus-input-section');
+        const focusInput = document.getElementById('focusInput');
+        const startFocusedMeditationBtn = document.getElementById('startFocusedMeditationBtn');
+        
+        const meditationTextSection = document.getElementById('meditation-text-section');
+        const currentFocusTitle = document.getElementById('currentFocusTitle');
+        const currentFocusText = document.getElementById('currentFocusText');
+        const meditationTextContent = document.getElementById('meditationTextContent');
+        
+        const showFeedbackFormBtn = document.getElementById('showFeedbackFormBtn');
+        const feedbackFormContainer = document.getElementById('feedback-form-container'); 
+        const feedbackEmailInput = document.getElementById('feedbackEmail');
+        const feedbackTextInput = document.getElementById('feedbackText');
+        const submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
+        const finishSessionBtn = document.getElementById('finishSessionBtn');
+        
+        const messageBox = document.getElementById('messageBox');
+
+        // App State
+        let reminderTimes = []; 
+        let reminderIntervalId = null;
+        let activeReminderTime = null;
+        const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const dayShortNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzd_8GEtO8ohARx3IP488up_L1qCG_kb0JSZjx7OFPI1bt_VGFkdcIoOIe_NvrvKTQH/exec'; // Replace with your actual URL
+
+
+        // --- Initialize App on Load ---
+        window.onload = function () {
+            initializeDayCheckboxes(); 
+            initializeMainApp();
+            document.body.style.alignItems = 'flex-start'; 
+            updateSelectedDaysText(); 
+            renderTimeSlots(); // Call to set initial visibility of schedule section
+        };
+        
+        // --- Dropdown Logic ---
+        daysDropdownBtn.addEventListener('click', (event) => {
+            event.stopPropagation(); 
+            daysDropdownContent.classList.toggle('hidden');
+        });
+
+        window.addEventListener('click', (event) => {
+            if (!daysDropdownBtn.contains(event.target) && !daysDropdownContent.contains(event.target)) {
+                daysDropdownContent.classList.add('hidden');
+            }
+        });
+
+        function initializeDayCheckboxes() {
+            daySelectionCheckboxesContainer.innerHTML = ''; 
+            dayNames.forEach((day, index) => {
+                const label = document.createElement('label');
+                label.className = 'inline-flex items-center cursor-pointer'; 
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'form-checkbox day-checkbox rounded h-4 w-4'; 
+                checkbox.dataset.dayIndex = index;
+                checkbox.addEventListener('change', handleIndividualDayChange); 
+                
+                const span = document.createElement('span');
+                span.className = 'ml-2 text-sm text-gray-700';
+                span.textContent = day; 
+                
+                label.appendChild(checkbox);
+                label.appendChild(span);
+                daySelectionCheckboxesContainer.appendChild(label);
+            });
+            allDaysCheckbox.addEventListener('change', handleAllDaysChange); 
+        }
+        
+        function updateSelectedDaysText() {
+            const checkedDays = [];
+            document.querySelectorAll('#daysDropdownContent .day-checkbox:checked').forEach(cb => {
+                checkedDays.push(dayShortNames[parseInt(cb.dataset.dayIndex)]);
+            });
+
+            if (checkedDays.length === 0) {
+                selectedDaysText.textContent = 'Select days';
+            } else if (checkedDays.length === 7) {
+                selectedDaysText.textContent = 'Daily';
+            } else {
+                selectedDaysText.textContent = checkedDays.join(', ');
+            }
+        }
+
+        function handleAllDaysChange() {
+            const isChecked = allDaysCheckbox.checked;
+            document.querySelectorAll('#daysDropdownContent .day-checkbox').forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+            updateSelectedDaysText(); 
+        }
+        
+        function handleIndividualDayChange() {
+            const allDayCheckboxes = document.querySelectorAll('#daysDropdownContent .day-checkbox');
+            const allChecked = Array.from(allDayCheckboxes).every(c => c.checked);
+            allDaysCheckbox.checked = allChecked;
+            updateSelectedDaysText(); 
+        }
+
+        // --- Reminder Logic ---
+        addTimeSlotBtn.addEventListener('click', () => {
+            const timeValue = newTimeSlotInput.value;
+            if (!timeValue) {
+                showToast("Please select a valid time to add.");
+                return;
+            }
+            const selectedDaysIndices = [];
+            document.querySelectorAll('#daysDropdownContent .day-checkbox:checked').forEach(checkbox => {
+                selectedDaysIndices.push(parseInt(checkbox.dataset.dayIndex));
+            });
+            if (selectedDaysIndices.length === 0) {
+                showToast("Please select at least one day for repetition, or 'All Days'.");
+                return;
+            }
+            const [hours, minutes] = timeValue.split(':').map(num => parseInt(num));
+            if (reminderTimes.some(rt => rt.hours === hours && rt.minutes === minutes && JSON.stringify(rt.repeatDays.sort()) === JSON.stringify(selectedDaysIndices.sort()))) {
+                showToast("This exact time slot (time and days) is already added.");
+                return;
+            }
+            const newReminder = { 
+                id: Date.now(), 
+                hours, 
+                minutes, 
+                repeatDays: selectedDaysIndices.sort((a,b) => a - b), 
+                triggeredToday: false 
+            };
+            reminderTimes.push(newReminder);
+            reminderTimes.sort((a, b) => {
+                if (a.hours !== b.hours) return a.hours - b.hours;
+                if (a.minutes !== b.minutes) return a.minutes - b.minutes;
+                return a.repeatDays.join('') - b.repeatDays.join('');
+            });
+            renderTimeSlots();
+            showToast(`Meditation time added for ${formatDisplayTime(hours, minutes)} on selected days.`);
+            newTimeSlotInput.value = ''; 
+            document.querySelectorAll('#daysDropdownContent .day-checkbox').forEach(cb => cb.checked = false); 
+            allDaysCheckbox.checked = false; 
+            updateSelectedDaysText(); 
+            daysDropdownContent.classList.add('hidden'); 
+            if (!reminderIntervalId) {
+                reminderIntervalId = setInterval(checkReminders, 1000); 
+            }
+        });
+
+        function formatRepeatDays(dayIndices) {
+            if (dayIndices.length === 7) return "(Daily)";
+            if (dayIndices.length === 0) return "(No Repeat)";
+            return `(${dayIndices.map(index => dayShortNames[index]).join(', ')})`;
+        }
+
+        function renderTimeSlots() {
+            timeSlotsList.innerHTML = ''; 
+            if (reminderTimes.length === 0) {
+                timeSlotsListContainer.classList.add('hidden'); // Hide the container
+                noTimesMessage.classList.remove('hidden'); // Show "No meditation times set yet."
+                reminderStatusDiv.textContent = "Add some times to get started.";
+            } else {
+                timeSlotsListContainer.classList.remove('hidden'); // Show the container
+                noTimesMessage.classList.add('hidden'); // Hide "No meditation times set yet."
+                reminderTimes.forEach(rt => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'time-slot-item';
+                    const detailsDiv = document.createElement('div');
+                    detailsDiv.className = 'flex flex-col items-start';
+                    const timeText = document.createElement('span');
+                    timeText.className = 'time-details';
+                    timeText.textContent = formatDisplayTime(rt.hours, rt.minutes);
+                    const repeatText = document.createElement('span');
+                    repeatText.className = 'repeat-days';
+                    repeatText.textContent = formatRepeatDays(rt.repeatDays);
+                    detailsDiv.appendChild(timeText);
+                    detailsDiv.appendChild(repeatText);
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'button button-danger';
+                    removeBtn.textContent = 'Remove';
+                    removeBtn.onclick = () => removeTimeSlot(rt.id);
+                    listItem.appendChild(detailsDiv);
+                    listItem.appendChild(removeBtn);
+                    timeSlotsList.appendChild(listItem);
+                });
+                reminderStatusDiv.textContent = `Monitoring ${reminderTimes.length} time slot(s).`;
+            }
+        }
+
+        function removeTimeSlot(id) {
+            reminderTimes = reminderTimes.filter(rt => rt.id !== id);
+            renderTimeSlots(); // This will re-evaluate visibility
+            showToast("Time slot removed.");
+            if (reminderTimes.length === 0 && reminderIntervalId) {
+                clearInterval(reminderIntervalId);
+                reminderIntervalId = null;
+                // reminderStatusDiv.textContent set by renderTimeSlots
+            }
+        }
+        
+        function formatDisplayTime(hours, minutes) {
+            const displayHours = (hours % 12) || 12;
+            const amPm = hours >= 12 ? 'PM' : 'AM';
+            const displayMinutes = minutes.toString().padStart(2, '0');
+            return `${displayHours}:${displayMinutes} ${amPm}`;
+        }
+
+        function checkReminders() {
+            const now = new Date();
+            const currentHours = now.getHours();
+            const currentMinutes = now.getMinutes();
+            const currentSeconds = now.getSeconds();
+            const currentDay = now.getDay(); 
+            if (currentHours === 0 && currentMinutes === 0 && currentSeconds < 5) { 
+                let didReset = false;
+                reminderTimes.forEach(rt => {
+                    if (rt.triggeredToday) {
+                        rt.triggeredToday = false;
+                        didReset = true;
+                    }
+                });
+                if (didReset) console.log("Resetting triggeredToday flags for all reminders.");
+            }
+            for (const rt of reminderTimes) {
+                if (rt.hours === currentHours && rt.minutes === currentMinutes && currentSeconds === 0) {
+                    if (!rt.triggeredToday) {
+                        if (rt.repeatDays.includes(currentDay)) {
+                            rt.triggeredToday = true;
+                            activeReminderTime = rt;
+                            promptForFocus(rt);
+                            break; 
+                        }
+                    }
+                }
+            }
+        }
+
+        function promptForFocus(reminder) {
+            showToast(`It's ${formatDisplayTime(reminder.hours, reminder.minutes)} - time for your mindful moment!`, 5000);
+            settingsSection.classList.add('hidden');
+            meditationSection.classList.remove('hidden');
+            focusInputSection.classList.remove('hidden');
+            meditationTextSection.classList.add('hidden'); 
+            showFeedbackFormBtn.classList.add('hidden'); 
+            feedbackFormContainer.classList.add('hidden'); 
+            finishSessionBtn.classList.add('hidden'); 
+            focusInput.value = ''; 
+            meditationTitleElement.textContent = `Mindful Moment at ${formatDisplayTime(reminder.hours, reminder.minutes)}`;
+        }
+
+        startFocusedMeditationBtn.addEventListener('click', () => {
+            const focusText = focusInput.value.trim();
+            if (!focusText) {
+                showToast("Please enter your focus for this session.", 3000);
+                return;
+            }
+            const meditationParagraph = generateMeditationContent(focusText);
+            displayMeditationText(meditationParagraph, focusText);
+        });
+
+        function generateMeditationContent(focusText) {
+            const text = focusText.toLowerCase();
+            if (text.includes('meeting') || text.includes('presentation') || text.includes('prepare for work') || text.includes('interview')) {
+                return "Take a moment to center yourself. Breathe deeply. Visualize your upcoming event. See yourself calm, confident, and articulate. You are well-prepared and capable. Feel a sense of readiness and focus wash over you. Any anxieties are acknowledged and gently released with each exhale. You've got this. Approach this with clarity and presence.";
+            } else if (text.includes('calm') || text.includes('stress') || text.includes('anxiety') || text.includes('relax') || text.includes('peace')) {
+                return "Breathe in deeply, and as you exhale, let go of any tension you're holding. Imagine a wave of calm washing over you, from the crown of your head to the soles of your feet. With each breath, feel yourself becoming more centered and peaceful. Release any worries. You are safe and supported in this moment. Allow yourself to simply be, enveloped in tranquility.";
+            } else if (text.includes('focus') || text.includes('concentrate') || text.includes('clear mind')) {
+                return "Gently bring your awareness to your breath. Notice the sensation of air entering and leaving your body. If your mind wanders, gently guide it back to your breath. This is your anchor. Feel your thoughts settling, like ripples on a pond becoming still. Allow a sense of clarity and sharp focus to emerge. You are present and attentive.";
+            } else if (text.includes('gratitude') || text.includes('thankful') || text.includes('appreciate')) {
+                return "Bring to mind three things you are grateful for today, no matter how small. For each one, allow yourself to truly feel the appreciation in your heart. Let this warmth spread through you. Gratitude opens us to joy and connection. Carry this feeling with you as you move forward from this quiet moment of reflection.";
+            } else if (text.includes('sleep') || text.includes('tired') || text.includes('rest')) {
+                return "Prepare your body and mind for restful sleep. Let go of the day's events. With each exhale, release any lingering thoughts or concerns. Imagine your body becoming heavy and relaxed, sinking comfortably into your bed. Your mind is becoming quiet and still. A sense of deep peace is washing over you, guiding you towards a night of restorative sleep. You are safe and comfortable. Sleep now.";
+            }
+            return "Gently close your eyes or soften your gaze. Bring your awareness to this present moment. Notice the sensations in your body – the feeling of your feet on the floor, your hands resting in your lap. Notice the sounds around you, without judgment, simply observing. Your breath is your anchor. Just be here, now, allowing yourself this moment of quiet stillness. This is your time to simply be.";
+        }
+
+        function displayMeditationText(paragraph, originalFocus) {
+            focusInputSection.classList.add('hidden');
+            meditationTextSection.classList.remove('hidden');
+            currentFocusText.textContent = `"${originalFocus}"`;
+            meditationTextContent.innerHTML = paragraph.replace(/\n/g, '<br>');
+            meditationTitleElement.textContent = "Your Guided Meditation";
+            showFeedbackFormBtn.classList.remove('hidden');
+            feedbackFormContainer.classList.add('hidden'); 
+            feedbackEmailInput.value = ''; 
+            feedbackTextInput.value = ''; 
+            finishSessionBtn.classList.add('hidden'); 
+        }
+
+        showFeedbackFormBtn.addEventListener('click', () => {
+            showFeedbackFormBtn.classList.add('hidden'); 
+            feedbackFormContainer.classList.remove('hidden'); 
+        });
+
+        submitFeedbackBtn.addEventListener('click', () => {
+            const email = feedbackEmailInput.value.trim();
+            const feedback = feedbackTextInput.value.trim();
+            if (!feedback) {
+                showToast("Please enter your feedback before submitting.", 3000);
+                return;
+            }
+            if (GOOGLE_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbzd_8GEtO8ohARx3IP488up_L1qCG_kb0JSZjx7OFPI1bt_VGFkdcIoOIe_NvrvKTQH/exec' || !GOOGLE_SCRIPT_URL) {
+                showToast("Feedback feature not configured. Please set Google Script URL.", 4000);
+                console.warn("Google Apps Script URL is not set. Feedback not sent.");
+                feedbackFormContainer.classList.add('hidden'); 
+                finishSessionBtn.classList.remove('hidden');
+                return;
+            }
+            submitFeedbackBtn.disabled = true;
+            submitFeedbackBtn.textContent = 'Submitting...';
+            const formData = new FormData();
+            formData.append('timestamp', new Date().toISOString());
+            formData.append('email', email);
+            formData.append('feedback', feedback);
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === 'success') {
+                    showToast("Thank you for your feedback!", 3000);
+                    feedbackFormContainer.classList.add('hidden'); 
+                    finishSessionBtn.classList.remove('hidden'); 
+                } else {
+                    throw new Error(data.message || 'Unknown error from Apps Script');
+                }
+            })
+            .catch(error => {
+                console.error("Error submitting feedback:", error);
+                showToast("Error submitting feedback. Please try again. " + error.message, 4000);
+            })
+            .finally(() => {
+                submitFeedbackBtn.disabled = false;
+                submitFeedbackBtn.textContent = 'Submit Feedback';
+            });
+        });
+
+        finishSessionBtn.addEventListener('click', () => {
+            meditationSection.classList.add('hidden');
+            settingsSection.classList.remove('hidden');
+            meditationTitleElement.textContent = "Time for your mindful moment!"; 
+            showToast("Session finished. Hope you feel refreshed!", 3000);
+            activeReminderTime = null; 
+        });
+
+        function showToast(message, duration = 3000) {
+            messageBox.textContent = message;
+            messageBox.style.display = 'block';
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+            }, duration);
+        }
+        
+        function initializeMainApp() {
+            const now = new Date();
+            const defaultHours = now.getHours().toString().padStart(2, '0');
+            const defaultMinutes = now.getMinutes().toString().padStart(2, '0');
+            if (newTimeSlotInput) {
+                newTimeSlotInput.value = `${defaultHours}:${defaultMinutes}`;
+            }
+            renderTimeSlots(); // Initial call to set visibility
+             if (reminderTimes.length > 0 && !reminderIntervalId) { 
+                reminderIntervalId = setInterval(checkReminders, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
